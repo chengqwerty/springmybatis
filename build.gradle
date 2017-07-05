@@ -1,0 +1,35 @@
+group 'springmybatis'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+ext {
+    springVersion = '4.3.8.RELEASE'
+    mybatisVersion = '3.4.4'
+    mybatis_spring = '1.3.1'
+    commons_dbcp = '1.4'
+    log4jVersion = '1.2.17'
+}
+
+repositories {
+    maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    mavenCentral()
+}
+
+dependencies {
+    compile files("lib/ojdbc14.jar")
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.mybatis:mybatis:$mybatisVersion"
+    compile "org.mybatis:mybatis-spring:$mybatis_spring"
+    compile "commons-dbcp:commons-dbcp:$commons_dbcp"
+    compile "log4j:log4j:$log4jVersion"
+    compile "javax.inject:javax.inject:1"
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.9'
+    compile "org.springframework:spring-webmvc:$springVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
