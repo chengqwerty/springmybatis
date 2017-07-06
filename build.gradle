@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile files("lib/ojdbc14.jar")
+    compile files("lib/ojdbc6.jar")
     compile "org.springframework:spring-core:$springVersion"
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-jdbc:$springVersion"

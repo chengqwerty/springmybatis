@@ -8,4 +8,6 @@ public interface BaseService {
     public void sqlQuery();
 
     public void sqlInsert();
+
+    public void sqlProcedure();
 }

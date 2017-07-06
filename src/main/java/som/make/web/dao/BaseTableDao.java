@@ -8,4 +8,6 @@ public interface BaseTableDao {
     public void simpleQuery();
 
     public void simpleInsert();
+
+    public void simpleProcedure();
 }

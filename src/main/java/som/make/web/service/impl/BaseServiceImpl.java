@@ -11,16 +11,20 @@ import som.make.web.service.BaseService;
 @Service
 public class BaseServiceImpl implements BaseService {
     @Autowired
-    private BaseTableDao baseTable;
+    private BaseTableDao baseTableDao;
 
     @Override
     public void sqlQuery(){
-        baseTable.simpleQuery();
+        baseTableDao.simpleQuery();
     }
 
     @Override
     public void sqlInsert(){
-        baseTable.simpleInsert();
+        baseTableDao.simpleInsert();
     }
 
+    @Override
+    public void sqlProcedure(){
+        baseTableDao.simpleProcedure();
+    }
 }

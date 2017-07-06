@@ -14,7 +14,7 @@
                             http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:property-placeholder ignore-unresolvable="true" local-override="true" ignore-resource-not-found="true"
-                                  location="/WEB-INF/config/jdbc.properties"/>
+                                  location="/WEB-INF/config/jdbc.local.properties"/>
     <!--扫描添加事务的包，注意不能放在springmvc的配置文件中，mvc是子容器，不会添加事务-->
     <context:component-scan base-package="som.make.web.dao"/>
     <!-- enable transaction annotation support -->

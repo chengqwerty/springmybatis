@@ -27,4 +27,10 @@ public class BaseController {
         baseService.sqlInsert();
         return "index";
     }
+
+    @RequestMapping("/simpleProcedure")
+    public String simpleProcedure(){
+        baseService.sqlProcedure();
+        return "index";
+    }
 }
