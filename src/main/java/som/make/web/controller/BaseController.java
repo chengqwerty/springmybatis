@@ -11,10 +11,15 @@ import som.make.web.service.TestService;
  * Created by Think on 2017/7/3.
  */
 @Controller
-@RequestMapping("/simple")
+@RequestMapping("/")
 public class BaseController {
     @Autowired
     public BaseService baseService;
+
+    @RequestMapping()
+    public String base(){
+        return "index.html";
+    }
 
     @RequestMapping("/query")
     public String simpleQuery(){
