@@ -14,6 +14,7 @@
     <context:property-placeholder ignore-unresolvable="true" local-override="true" ignore-resource-not-found="true"
                                   location="/WEB-INF/config/jdbc.properties"/>
     <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/*.html" location="/"/>
     <mvc:resources mapping="/json/**" location="/json/"/>
