@@ -23,8 +23,9 @@ public class BaseController {
 
     @RequestMapping("/query")
     public String simpleQuery(){
+        System.out.println("RequestMapping is =======/query");
         baseService.sqlQuery();
-        return "index";
+        return "index.html";
     }
 
     @RequestMapping("/insert")

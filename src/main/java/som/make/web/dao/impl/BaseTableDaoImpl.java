@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import som.make.web.dao.BaseTableDao;
+import som.make.web.dao.autodao.TestDao;
 import som.make.web.entity.Test;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +25,22 @@ public class BaseTableDaoImpl extends SqlSessionDaoSupport implements BaseTableD
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    @Autowired
+    private TestDao testDao;
+
     @Override
     public void simpleQuery(){
         List<Integer> result=getSqlSession().selectList("som.make.web.mapping.sqllistMapper.findId",4);
         for(int i:result){
-            System.out.println("======"+i);
+            System.out.println("i======"+i);
         }
+
+        TestDao testDao1=getSqlSession().getMapper(TestDao.class);
+        int id1=testDao1.findId(4);
+        System.out.println("id1========"+id1);
+
+        int id2=testDao.findId(4);
+        System.out.println("id2========"+id2);
     }
 
     @Override
