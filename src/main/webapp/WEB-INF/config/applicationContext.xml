@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <description>spring root configuration</description>
+
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder ignore-unresolvable="true" local-override="true" ignore-resource-not-found="true"
+                                  location="/WEB-INF/config/spring.properties"></context:property-placeholder>
+
+    <!-- 加载应用属性实例，可通过  @Value("#{app_prop['jdbc.driver']}") String jdbcDriver 方式引用 -->
+    <util:properties id="app_prop" location="/WEB-INF/config/spring.properties" local-override="true"></util:properties>
+
+    <!-- 使用Annotation自动注册Bean,注意springmvc是子容器,需要提前加载初始化的bean不能配置在springmvc中，包括事务的配置 -->
+    <context:component-scan base-package="som.make">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+</beans>

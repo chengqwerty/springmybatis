@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="som.make.web.dao.autodao.TestDao">
+
+    <resultMap id="idMap" type="som.make.web.dao.autodao.TestDao">
+        <result column="id" property="id"/>
+    </resultMap>
+
+    <insert id="addId" parameterType="int">
+        <![CDATA[
+          INSERT into test (id)
+          select id from test1
+        ]]>
+    </insert>
+
+    <select id="findId" resultType="int" parameterType="int">
+        <![CDATA[
+          select id from test where id=#{id}
+        ]]>
+    </select>
+
+    <select id="simpleProcedure"  statementType="CALLABLE" parameterType="java.util.Map">
+        <![CDATA[
+          {call querytestbyid(
+          #{id,jdbcType=INTEGER,mode=IN},
+          #{idlist,jdbcType=CURSOR,mode=OUT,resultMap=idMap})}
+        ]]>
+    </select>
+</mapper>

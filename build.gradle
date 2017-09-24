@@ -11,7 +11,7 @@ ext {
     mybatisVersion = '3.4.4'
     mybatis_spring = '1.3.1'
     commons_dbcp = '1.4'
-    log4jVersion = '1.2.17'
+    shiroVersion = '1.4.0'
 }
 
 repositories {
@@ -22,13 +22,19 @@ repositories {
 dependencies {
     compile files("lib/ojdbc6.jar")
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    //spring
     compile "org.springframework:spring-core:$springVersion"
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-jdbc:$springVersion"
+    //mybatis
     compile "org.mybatis:mybatis:$mybatisVersion"
     compile "org.mybatis:mybatis-spring:$mybatis_spring"
     compile "commons-dbcp:commons-dbcp:$commons_dbcp"
-    //compile "log4j:log4j:$log4jVersion"
+    //shiro
+    compile "org.apache.shiro:shiro-core:$shiroVersion"
+    compile "org.apache.shiro:shiro-web:$shiroVersion"
+    compile "org.apache.shiro:shiro-spring:$shiroVersion"
+
     compile "javax.inject:javax.inject:1"
     compile "org.springframework:spring-webmvc:$springVersion"
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
