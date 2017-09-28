@@ -5,28 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-    <div ng-app="myApp" ng-controller="siteCtrl">
-        <ul>
-            <li ng-repeat="x in names">
-                {{ x.Name + ', ' + x.Country }}
-            </li>
-        </ul>
+    <div id="imgcontainer" style="height: 400px;width: 400px;">
+
     </div>
 
 <script type="text/javascript" src="js/angular/angular.js"></script>
 <script type="text/javascript">
-    var app=angular.module('myApp',[]);
-    
-    app.controller('siteCtrl',function($scope,$http){
-        $http({
-            method:'GET',
-            url:'json/sites.json'
-        }).then(function successCallback(response) {
-            $scope.names=response.data.sites;
-        },function errorCallback(response) {
-            console.log("============no data!");
-        })
-    })
+    var url = "image/easy"
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = "blob";
+    xhr.onload = function() {
+        if (this.status == 200) {
+            var blob = this.response;
+            var img = document.createElement("img");
+            img.onload = function(e) {
+                window.URL.revokeObjectURL(img.src);
+            };
+            img.src = window.URL.createObjectURL(blob);
+            var imgBody = document.getElementById("imgcontainer");
+            imgBody.appendChild(img);
+        }
+    }
+    xhr.send();
 </script>
 </body>
 </html>
