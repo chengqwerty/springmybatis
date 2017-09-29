@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="application/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="application/javascript">
+    function getUrlParam(inObject) {
+        var strParams = "";
+        for(var m in inObject) {
+            strParams = strParams + m + "=" + inObject[m] + "&";
+        }
+        strParams = strParams.substr(0, strParams.length - 1);
+        return strParams;
+    };
+    var sk = {
+        fname:"abc",
+        lname:"gates"
+    };
+    var url = "easy";
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(getUrlParam(sk));
+</script>
+</body>
+</html>
