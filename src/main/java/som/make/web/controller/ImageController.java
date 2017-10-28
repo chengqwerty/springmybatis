@@ -2,7 +2,9 @@ package som.make.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +29,9 @@ public class ImageController {
      */
     @CrossOrigin()
     @RequestMapping("/easy")
-    public void getEasyImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    public void getEasyImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                             @RequestBody String params) throws IOException {
+        System.out.println(params);
         String path = httpServletRequest.getServletContext().getRealPath("image/meinv.jpg");
         File file = new File(path);
         FileInputStream fileInputStream = new FileInputStream(file);
