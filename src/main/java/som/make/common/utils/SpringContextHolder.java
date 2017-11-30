@@ -16,6 +16,9 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 
     private static Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
 
+    /**
+     *清除SpringContextHolder中的ApplicationContext为Null.
+     */
     public static void clearHolder() {
         if (logger.isDebugEnabled()) {
             logger.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
@@ -23,8 +26,29 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         applicationContext = null;
     }
 
+    /**
+     *从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.
+     * @param name
+     * @param <T>
+     * @return
+     */
+    public static <T> T getBean(String name) {
+        return (T) applicationContext.getBean(name);
+    }
+
+    /**
+     *从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.
+     * @param requiredType
+     * @param <T>
+     * @return
+     */
+    public static <T> T getBean(Class<T> requiredType) {
+        return applicationContext.getBean(requiredType);
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
+        System.out.println("SpringContextHolder setApplicationContext");
         SpringContextHolder.applicationContext = applicationContext;
     }
 
