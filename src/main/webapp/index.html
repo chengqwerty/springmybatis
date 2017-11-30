@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
     <div id="imgcontainer" style="height: 400px;width: 400px;">
@@ -11,7 +12,7 @@
 
 <script type="text/javascript" src="js/angular/angular.js"></script>
 <script type="text/javascript">
-    var url = "image/easy";
+    var url = "http://192.168.2.212:8000/CreateLidaImage?stationId=12632&channel=chARaw&width=1000&height=400";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.responseType = "blob";
