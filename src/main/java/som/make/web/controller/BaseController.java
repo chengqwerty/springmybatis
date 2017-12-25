@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import som.make.web.entity.Test;
 import som.make.web.service.BaseService;
 import som.make.web.service.TestService;
 
@@ -22,8 +23,8 @@ public class BaseController {
     }
 
     @RequestMapping("/query")
-    public String simpleQuery(){
-        System.out.println("RequestMapping is =======/query");
+    public String simpleQuery(Test test){
+        System.out.println(test);
         baseService.sqlQuery();
         return "index.html";
     }
