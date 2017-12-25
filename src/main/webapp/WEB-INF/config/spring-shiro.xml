@@ -5,14 +5,37 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd" default-lazy-init="true">
 
     <description>shiro configuration</description>
 
     <!-- 加载属性配置文件 -->
     <context:property-placeholder ignore-unresolvable="true" location="/WEB-INF/config/spring.properties"></context:property-placeholder>
 
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <!-- shiro 权限过滤器定义 -->
+    <bean name="shiroFilterChainDefinitions" class="java.lang.String">
+        <constructor-arg>
+            <value>
+                /node_modules/** = anon
+                ${cactiPath}/login = authc
+                ${cactiPath}/logout = logout
+                ${cactiPath}/** = user
+            </value>
+        </constructor-arg>
+    </bean>
 
+    <!-- 安全认证过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="${cactiPath}/login" />
+        <property name="successUrl" value="${cactiPath}/loginSuccess" />
+        <property name="filterChainDefinitions">
+            <ref bean="shiroFilterChainDefinitions"/>
+        </property>
+    </bean>
+
+    <!-- shiro secuityManager 配置-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shermanAuthorizingRealm" />
     </bean>
 </beans>

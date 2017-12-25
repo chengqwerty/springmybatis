@@ -16,9 +16,6 @@
     <context:property-placeholder ignore-unresolvable="true" local-override="true" ignore-resource-not-found="true"
                                   location="/WEB-INF/config/spring.properties"></context:property-placeholder>
 
-    <!-- 加载应用属性实例，可通过  @Value("#{app_prop['jdbc.driver']}") String jdbcDriver 方式引用 -->
-    <util:properties id="app_prop" location="/WEB-INF/config/spring.properties" local-override="true"></util:properties>
-
     <!-- 使用Annotation自动注册Bean,注意springmvc是子容器,需要提前加载初始化的bean不能配置在springmvc中，包括事务的配置 -->
     <context:component-scan base-package="som.make">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
