@@ -20,6 +20,7 @@
                 ${cactiPath}/login = authc
                 ${cactiPath}/logout = logout
                 ${cactiPath}/** = user
+                /** = anon
             </value>
         </constructor-arg>
     </bean>
@@ -37,5 +38,16 @@
     <!-- shiro secuityManager 配置-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shermanAuthorizingRealm" />
+        <property name="sessionManager" ref="sessionManager" />
+    </bean>
+
+    <!-- 自定义sessionManager -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 自定义sessionIdCookie -->
+        <property name="sessionIdCookie" ref="sessionIdCookie" />
+    </bean>
+
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="ancient.tree.id"/>
     </bean>
 </beans>
