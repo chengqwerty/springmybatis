@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
+import som.make.common.utils.UserUtils;
+import som.make.web.entity.User;
 
 @Service
 public class ShermanAuthorizingRealm extends AuthorizingRealm implements InitializingBean{
@@ -40,11 +42,13 @@ public class ShermanAuthorizingRealm extends AuthorizingRealm implements Initial
     protected org.apache.shiro.authc.AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername();
-        String password = new String(usernamePasswordToken.getPassword());
-        if (username.equals("chengcheng") && password.equals("chengcheng")) {
-            return new SimpleAuthenticationInfo(username, "f73b2f8e1f85d5bde83c5029de8eb64dda416462", getName());
+        //String password = new String(usernamePasswordToken.getPassword());
+        User user = UserUtils.getUserByUsername(username);
+        if (user == null) {
+            return null;
+        } else {
+            return new SimpleAuthenticationInfo(username, user.getPassword(), getName());
         }
-        return null;
     }
 
     @Override

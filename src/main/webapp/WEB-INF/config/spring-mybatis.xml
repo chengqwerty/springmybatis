@@ -48,7 +48,8 @@
     <!-- 扫描basePackage下所有接口 -->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="som.make.web.dao.autodao"/>
+        <!--<property name="basePackage" value="som.make.web.dao.autodao"/>-->
+        <property name="basePackage" value="som.make.web.dao"/>
     </bean>
 
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->

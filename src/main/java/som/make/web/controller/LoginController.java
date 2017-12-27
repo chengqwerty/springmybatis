@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "${cactiPath}")
 public class LoginController {
 
-    @Value("${cactiPath")
+    @Value("${cactiPath}")
     protected String cactiPath;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
