@@ -4,16 +4,18 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShermanAuthorizingRealm extends AuthorizingRealm{
+public class ShermanAuthorizingRealm extends AuthorizingRealm implements InitializingBean{
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -40,7 +42,7 @@ public class ShermanAuthorizingRealm extends AuthorizingRealm{
         String username = usernamePasswordToken.getUsername();
         String password = new String(usernamePasswordToken.getPassword());
         if (username.equals("chengcheng") && password.equals("chengcheng")) {
-            return new SimpleAuthenticationInfo(username, password, getName());
+            return new SimpleAuthenticationInfo(username, "f73b2f8e1f85d5bde83c5029de8eb64dda416462", getName());
         }
         return null;
     }
@@ -48,5 +50,12 @@ public class ShermanAuthorizingRealm extends AuthorizingRealm{
     @Override
     protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
         return super.getAuthorizationInfo(principals);
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("SHA-1");
+        setCredentialsMatcher(hashedCredentialsMatcher);
     }
 }
