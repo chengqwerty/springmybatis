@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import som.make.common.utils.SysShiroUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,10 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String failAlgaLogin() {
+        String principal = SysShiroUtils.getPrincipal();
+        if (principal != null) {
+            return "redirect:/botany/botanyApp.html";
+        }
         return "redirect:/botany/login.html";
     }
 
