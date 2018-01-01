@@ -39,6 +39,17 @@ public class User {
         this.showname = showname;
     }
 
+    public boolean isAdmin(){
+        return isAdmin(this.userid);
+    }
+
+    public static boolean isAdmin(Long userid) {
+        if (userid == 1) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "User{" +

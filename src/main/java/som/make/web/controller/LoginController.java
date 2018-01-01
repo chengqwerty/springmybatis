@@ -39,8 +39,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "loginSuccess")
-    @ResponseBody
     public String loginSuccess() {
-        return "/botany/botanyApp.html";
+        return "redirect:/botany/botanyApp.html";
     }
 }

@@ -2,9 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="som.make.web.dao.UserDao">
+
+    <select id="userQueryByUserid" resultType="som.make.web.entity.User" parameterType="java.lang.Long">
+        select user_id userid, username, password, showname
+        from sys_user
+        where user_id = #{id}
+    </select>
+
     <select id="userQueryByUsername" resultType="som.make.web.entity.User" parameterType="java.lang.String">
         select user_id userid, username, password, showname
           from sys_user
          where username = #{name}
+    </select>
+
+    <select id="userRoleQueryByUserid" resultType="som.make.web.entity.UserRole" parameterType="java.lang.Long">
+        select t.user_id userid, t.username, t2.role_id, t2.rolename
+          from sys_user t
+          left join sys_user_role t1
+            on t.user_id = t1.user_id
+          left join sys_role t2
+            on t1.role_id = t2.role_id
+         where t.user_id = #{id}
+    </select>
+
+    <select id="userPermissionQueryByUserid" resultType="som.make.web.entity.UserPermission" parameterType="java.lang.Long">
+        select t.user_id userid, t.username, t2.permission_id, t2.permission
+          from sys_user t
+          left join sys_user_permission t1
+            on t.user_id = t1.user_id
+          left join sys_permission t2
+            on t1.permission_id = t2.permission_id
+         where t.user_id = #{id}
+        union all
+        select t.user_id userid, t.username, t4.permission_id, t4.permission
+          from sys_user t
+          left join sys_user_role t1
+            on t.user_id = t1.user_id
+          left join sys_role t2
+            on t1.role_id = t2.role_id
+          left join sys_role_permission t3
+            on t2.role_id = t3.role_id
+          left join sys_permission t4
+            on t3.permission_id = t4.permission_id
+         where t.user_id = #{id}
     </select>
 </mapper>

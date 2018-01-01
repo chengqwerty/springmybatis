@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="../node_modules/normalize.css/normalize.css">
+    <link type="text/css" rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    This is botanyApp;
+<div class="container-fluid">
+    <div class="row" style="height: 100%; width: 100%">
+        <div class="col-md-12" style="position: absolute;top:50%;transform: translateY(-50%)">
+            <div id="show-html" class="row" style="width: 420px;margin: auto;border-radius: 3px;border:1px solid #00F5FF;">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="application/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="application/javascript">
+    $.ajax({
+        url: "/base/query",
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        success: function (result, status, xhr) {
+            $("#show-html").html(result.message);
+        }
+    })
+</script>
 </body>
 </html>

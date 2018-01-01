@@ -32,4 +32,7 @@
     <mvc:resources mapping="/*.html" location="/"/>
     <mvc:resources mapping="/json/**" location="/json/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
 </beans>
