@@ -20,6 +20,7 @@
                 ${cactiPath}/login = authc
                 ${cactiPath}/logout = logout
                 ${cactiPath}/** = user
+                /botany/** = anon
                 /** = anon
             </value>
         </constructor-arg>

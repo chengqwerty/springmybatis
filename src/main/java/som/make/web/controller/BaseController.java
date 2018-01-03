@@ -1,11 +1,15 @@
 package som.make.web.controller;
 
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import som.make.common.utils.UserUtils;
 import som.make.web.entity.Test;
 import som.make.common.config.CommonConfig;
 import som.make.common.utils.SpringContextHolder;
@@ -24,6 +28,9 @@ public class BaseController {
     @Autowired
     public BaseService baseService;
 
+    @Autowired
+    public CacheManager cacheManager;
+
     @RequestMapping()
     public String base(){
         return "redirect:/botany/login.html";
@@ -40,6 +47,9 @@ public class BaseController {
 
     @RequestMapping("/insert")
     public String simpleInsert(){
+        Cache cache = cacheManager.getCache(UserUtils.AUTHORIZACACHENAME, String.class, SimpleAuthorizationInfo.class);
+        cache.put("2dfdfdfds", new SimpleAuthorizationInfo());
+        System.out.println(cache.get("2dfdfdfds"));
         baseService.sqlInsert();
         return "index";
     }

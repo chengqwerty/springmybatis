@@ -1,7 +1,11 @@
 package som.make.common.utils;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
 import som.make.sherman.security.ShermanAuthorizingRealm.Principal;
 import som.make.web.dao.UserDao;
 import som.make.web.entity.Permission;
@@ -14,9 +18,12 @@ import java.util.List;
 public class UserUtils {
 
     private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
+    private static CacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
+
+    public static final String AUTHORIZACACHENAME = "authorizationCache";
 
     /**
-     * 获取当前登录的用户
+     * 获取当前登录的用户身份
      * @return
      */
     public static Principal getPrincipal() {
@@ -28,6 +35,44 @@ public class UserUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前subject的session
+     * @return
+     */
+    public static Session getSession() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession(false);
+            if (session == null) {
+                session = subject.getSession();
+            }
+            if (session != null) {
+                return session;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean saveAuthzToCache(String alias, String key, SimpleAuthorizationInfo simpleAuthorizationInfo) {
+        Cache cache = cacheManager.getCache(alias, key.getClass(), simpleAuthorizationInfo.getClass());
+        if (cache != null) {
+            cache.put(key, simpleAuthorizationInfo);
+            return true;
+        }
+        return false;
+    }
+
+    public static SimpleAuthorizationInfo getAuthzFormCache(String alias, String key) {
+        Cache cache = cacheManager.getCache(alias, key.getClass(), SimpleAuthorizationInfo.class);
+        if (cache != null) {
+            SimpleAuthorizationInfo simpleAuthorizationInfo = (SimpleAuthorizationInfo) cache.get(key);
+            return simpleAuthorizationInfo;
         }
         return null;
     }
@@ -71,7 +116,10 @@ public class UserUtils {
         return user;
     }
 
-
+    /**
+     * 获取当前用户的权限列表
+     * @return
+     */
     public static List<UserPermission> getPermissionList() {
         List<UserPermission> userPermissionList = new ArrayList<>();
         User user = getUser();

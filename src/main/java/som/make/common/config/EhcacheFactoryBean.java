@@ -20,11 +20,12 @@ public class EhcacheFactoryBean implements FactoryBean {
     }
 
     @Override
-    public Object getObject() throws Exception {
+    public CacheManager getObject() throws Exception {
         URL configUrl = getClass().getResource(classConfigPath);
         Configuration xmlConfig = new XmlConfiguration(configUrl);
         CacheManager cacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);
-        return null;
+        cacheManager.init();
+        return cacheManager;
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.StringUtils;
 import org.slf4j.Logger;
@@ -43,9 +44,15 @@ public class ShermanAuthorizingRealm extends AuthorizingRealm implements Initial
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Principal principal = (Principal) getAvailablePrincipal(principals);
+        Session session = UserUtils.getSession();
+        SimpleAuthorizationInfo simpleAuthorizationInfo;
+        simpleAuthorizationInfo = UserUtils.getAuthzFormCache(UserUtils.AUTHORIZACACHENAME, session.getId().toString());
+        if (simpleAuthorizationInfo != null) {
+            return simpleAuthorizationInfo;
+        }
         User user = UserUtils.getUserByUsername(principal.getUsername());
         if (user != null) {
-            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            simpleAuthorizationInfo = new SimpleAuthorizationInfo();
             List<UserPermission> userPermissionList = UserUtils.getPermissionList();
             for (UserPermission userPermission: userPermissionList) {
                 String permission = StringUtils.clean(userPermission.getPermission());
@@ -55,6 +62,13 @@ public class ShermanAuthorizingRealm extends AuthorizingRealm implements Initial
             }
             //添加一般用户权限
             simpleAuthorizationInfo.addStringPermission("generaluser");
+            //权限保存到缓存
+            boolean isSuccess = UserUtils.saveAuthzToCache(UserUtils.AUTHORIZACACHENAME, session.getId().toString(), simpleAuthorizationInfo);
+            if (isSuccess) {
+
+            } else {
+                return null;
+            }
             return simpleAuthorizationInfo;
         }
         return null;

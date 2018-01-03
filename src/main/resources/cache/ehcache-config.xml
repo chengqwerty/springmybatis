@@ -25,4 +25,15 @@
     <cache alias="bar" uses-template="myDefaults">
     </cache>
 
+    <cache alias="authorizationCache">
+        <key-type>java.lang.String</key-type>
+        <value-type>org.apache.shiro.authz.SimpleAuthorizationInfo</value-type>
+        <expiry>
+            <ttl unit="seconds">1800</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
+    </cache>
+
 </config>
